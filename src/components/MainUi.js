@@ -3,31 +3,32 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { nanoid } from "nanoid";
 import { TodoList } from "./TodoList";
+import * as Actions from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export const MainUi = () => {
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
+
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos);
+
   const handleAddTodo = () => {
     if (input) {
       const id = nanoid();
-      setTodos([...todos, { id, input }]);
+      const payload = { id, input };
+      dispatch(Actions.addTodo(payload));
       setInput("");
     }
   };
   const handleUpdateTodo = (id, editedText) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, input: editedText } : todo
-    );
-    setTodos(updatedTodos);
+    const payload = { id, input: editedText };
+    dispatch(Actions.updateTodo(payload));
   };
   const handleCheckboxChange = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, checked: !todo.checked } : todo
-    );
-    setTodos(updatedTodos);
+    dispatch(Actions.status(id));
   };
   const handleDelete = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch(Actions.deleteTodo(id));
   };
   return (
     <div className="max-w-lg mx-auto mt-10 p-4 border rounded-lg shadow-md space-y-4">
