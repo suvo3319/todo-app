@@ -3,8 +3,8 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { nanoid } from "nanoid";
 import { TodoList } from "./TodoList";
-import * as Actions from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { addTodo, deleteTodo, status, updateTodo } from "../redux/todoSlicer";
 
 export const MainUi = () => {
   const [input, setInput] = useState("");
@@ -16,19 +16,19 @@ export const MainUi = () => {
     if (input) {
       const id = nanoid();
       const payload = { id, input };
-      dispatch(Actions.addTodo(payload));
+      dispatch(addTodo(payload));
       setInput("");
     }
   };
   const handleUpdateTodo = (id, editedText) => {
     const payload = { id, input: editedText };
-    dispatch(Actions.updateTodo(payload));
+    dispatch(updateTodo(payload));
   };
   const handleCheckboxChange = (id) => {
-    dispatch(Actions.status(id));
+    dispatch(status(id));
   };
   const handleDelete = (id) => {
-    dispatch(Actions.deleteTodo(id));
+    dispatch(deleteTodo(id));
   };
   return (
     <div className="max-w-lg mx-auto mt-10 p-4 border rounded-lg shadow-md space-y-4">
