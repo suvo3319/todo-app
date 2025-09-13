@@ -6,5 +6,7 @@ import todoReducer from "./todoSlicer";
 // export const store = createStore(todoReducer);
 
 export const store = configureStore({
-  reducer: todoReducer,
+  reducer: {
+    todo: todoReducer,
+  },
 });

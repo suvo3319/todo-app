@@ -49,6 +49,7 @@ export const DataFetcher = () => {
               <input
                 type="text"
                 placeholder="Enter Your Text"
+                value={text}
                 onChange={(e) => {
                   setText(e.target.value);
                 }}
